@@ -1,57 +1,818 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meine Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Sanierung, Neubau und Vermarktung – förderoptimiert, wertsteigernd, aus einer Hand." />
+  <title>Baukonzept360 – Immobilien die Werte schaffen</title>
+
+  <!--
+    ==========================
+    BRAND SETTINGS (hier anpassen)
+    ==========================
+    Tipp: Öffne deine aktuelle Seite → Rechtsklick → „Untersuchen“ → im Styles/Computed nach „color“ schauen.
+    Dann die Hex-Werte hier einsetzen.
+  -->
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root{
+      /* Farben (Platzhalter – bitte mit deinen echten Brand-Farben ersetzen) */
+      --bg: #0b0f17;          /* Hintergrund dunkel */
+      --card: #121a26;        /* Karten */
+      --text: #eaf0ff;        /* Text hell */
+      --muted: rgba(234,240,255,.72);
+      --line: rgba(234,240,255,.12);
+
+      --brand: #5eead4;       /* Akzent 1 (Buttons/Highlights) */
+      --brand2:#60a5fa;       /* Akzent 2 (optional) */
+
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+
+      --max: 1120px;
     }
-    .card {
-      background: white;
-      padding: 50px;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 600px;
+
+    /* Base */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(900px 600px at 20% -10%, rgba(94,234,212,.14), transparent 60%),
+        radial-gradient(700px 500px at 90% 10%, rgba(96,165,250,.16), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
+    .skip{position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;}
+    .skip:focus{left:16px; top:16px; width:auto; height:auto; padding:10px 12px; background:#000; border:1px solid var(--line); border-radius:10px; z-index:9999;}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(180%) blur(14px);
+      background:linear-gradient(to bottom, rgba(11,15,23,.82), rgba(11,15,23,.62));
+      border-bottom:1px solid var(--line);
     }
-    p {
-      font-size: 18px;
-      color: #555;
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
     }
-    .btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 24px;
-      background: black;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      transition: 0.3s;
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+      min-width: 180px;
     }
-    .btn:hover {
-      opacity: 0.8;
+    .logo{
+      height:28px; width:auto; display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
+    .brand span{font-weight:700; letter-spacing:.2px}
+    nav ul{
+      list-style:none; margin:0; padding:0;
+      display:flex; align-items:center; gap:16px;
+    }
+    nav a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:12px;
+    }
+    nav a:hover{background:rgba(255,255,255,.06); color:var(--text);}
+    .actions{display:flex; gap:10px; align-items:center;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      text-decoration:none;
+      font-weight:600;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(255,255,255,.08)}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(94,234,212,.95), rgba(96,165,250,.95));
+      color:#061018;
+      border-color:transparent;
+    }
+    .btn.primary:hover{filter:brightness(1.02)}
+    .menuBtn{display:none}
+
+    /* Hero */
+    .hero{
+      padding:56px 0 22px;
+    }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .hCard{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius:var(--radius);
+      padding:34px;
+      box-shadow: var(--shadow);
+    }
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      color:var(--muted);
+      font-weight:700;
+      letter-spacing:.22em;
+      font-size:12px;
+      text-transform:uppercase;
+    }
+    .kickerDot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--brand), var(--brand2));
+      box-shadow:0 0 0 6px rgba(94,234,212,.10);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(34px, 4.4vw, 56px);
+      line-height:1.02;
+      letter-spacing:-.02em;
+    }
+    .lead{margin:0; color:var(--muted); font-size:16px; max-width:60ch;}
+    .heroCtas{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .mini{
+      display:flex; gap:12px; align-items:center; margin-top:16px;
+      padding-top:16px; border-top:1px solid var(--line);
+      color:var(--muted);
+      font-weight:600;
+    }
+    .mini b{color:var(--text)}
+    .statCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      border-radius:var(--radius);
+      padding:20px;
+      display:grid;
+      gap:14px;
+    }
+    .statTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
+    .badge{
+      display:inline-flex;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(255,255,255,.04);
+      font-weight:700;
+      font-size:12px;
+    }
+    .cards3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:14px;
+      min-height:110px;
+    }
+    .pill h3{margin:0 0 6px; font-size:14px}
+    .pill p{margin:0; color:var(--muted); font-size:13px}
+
+    /* Sections */
+    section{padding:42px 0}
+    .secHead{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+      margin-bottom:16px;
+    }
+    .secHead h2{
+      margin:0;
+      font-size: clamp(22px, 2.6vw, 30px);
+      letter-spacing:-.01em;
+    }
+    .secHead p{margin:0; color:var(--muted); max-width:70ch}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:14px;}
+    .grid3{display:grid; grid-template-columns: repeat(3,1fr); gap:14px;}
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    .card h3{margin:0 0 8px; font-size:16px}
+    .card p{margin:0; color:var(--muted)}
+    .list{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+    .list li{margin:6px 0}
+
+    /* Benefit tiles */
+    .benefits{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;}
+    .benefit{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    .num{
+      width:36px; height:36px; border-radius:12px;
+      display:grid; place-items:center;
+      font-weight:800;
+      color:#061018;
+      background:linear-gradient(135deg, var(--brand), var(--brand2));
+      margin-bottom:10px;
+    }
+    .benefit h4{margin:0 0 6px; font-size:16px}
+    .benefit p{margin:0; color:var(--muted); font-size:14px}
+    .hint{color:var(--muted); font-size:13px; margin-top:10px}
+
+    /* Testimonials */
+    .quote{
+      display:flex; flex-direction:column; gap:12px;
+      padding:20px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+    }
+    .stars{letter-spacing:.08em}
+    .who{display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-weight:600}
+    .who b{color:var(--text)}
+
+    /* FAQ */
+    details{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.04);
+      padding:14px 16px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      color:var(--text);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{color:var(--muted); margin:10px 0 0}
+
+    /* Contact */
+    .contactGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
+    .contactCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    label{display:block; font-weight:700; margin:10px 0 6px}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.22);
+      color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .row2{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .check{
+      display:flex; gap:10px; align-items:flex-start; margin-top:10px;
+      color:var(--muted); font-size:13px;
+    }
+    .check input{width:18px; height:18px; margin-top:2px}
+    .small{color:var(--muted); font-size:13px}
+
+    /* Footer */
+    footer{
+      padding:26px 0 40px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+    }
+    .footGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap:14px;
+      align-items:start;
+    }
+    .footLinks a{display:block; padding:6px 0; text-decoration:none; color:var(--muted)}
+    .footLinks a:hover{color:var(--text)}
+    .copy{margin-top:18px; border-top:1px solid var(--line); padding-top:14px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between}
+    .legal a{color:var(--muted); text-decoration:none; margin-right:12px}
+    .legal a:hover{color:var(--text)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns:1fr}
+      .cards3{grid-template-columns:1fr}
+      .grid3,.benefits{grid-template-columns:1fr}
+      .grid2,.contactGrid{grid-template-columns:1fr}
+      nav ul{display:none}
+      .menuBtn{display:inline-flex}
+      .nav.open nav ul{
+        display:flex; flex-direction:column; align-items:stretch;
+        position:absolute; left:20px; right:20px; top:64px;
+        background:rgba(11,15,23,.94);
+        border:1px solid var(--line);
+        border-radius:18px;
+        padding:12px;
+      }
+      .nav.open nav a{padding:10px 12px}
     }
   </style>
 </head>
+
 <body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
 
-  <div class="card">
-    <h1>Website erfolgreich erstellt 🚀</h1>
-    <p>Deine Website läuft jetzt über GitHub Pages.</p>
-    <a href="#" class="btn">Mehr erfahren</a>
-  </div>
+  <header>
+    <div class="wrap">
+      <div class="nav" id="topNav">
+        <a class="brand" href="#top" aria-label="Baukonzept360 Start">
+          <!-- Logo: nutzt dein bestehendes Logo (extern). Wenn du willst, lade es in GitHub hoch und setze src="assets/logo-white.svg" -->
+          <img class="logo" src="https://baukonzepte360.de/logo-white.svg" alt="Baukonzept360 Logo" />
+          <span>Baukonzept360</span>
+        </a>
 
+        <nav aria-label="Hauptnavigation">
+          <ul>
+            <li><a href="#sanierung">Sanierung</a></li>
+            <li><a href="#neubau">Neubau</a></li>
+            <li><a href="#vermarktung">Vermarktung</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </nav>
+
+        <div class="actions">
+          <a class="btn" href="tel:+4944478559816">📞 Anrufen</a>
+          <a class="btn primary" href="#kontakt">Beratung vereinbaren</a>
+          <button class="btn menuBtn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">☰ Menü</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <div class="heroGrid">
+          <div class="hCard">
+            <div class="kicker"><span class="kickerDot"></span> IMMOBILIEN DIE WERTE SCHAFFEN</div>
+            <h1>Sanieren oder neu bauen –<br/>förderoptimiert &amp; zukunftssicher.</h1>
+            <p class="lead">
+              Sanieren oder neu bauen, mit KfW- und BAFA-Förderung effizient investieren und besser vermarkten.
+              Wir begleiten Sie von der Planung bis zur Umsetzung – wertsteigernd, zukunftssicher.
+            </p>
+
+            <div class="heroCtas">
+              <a class="btn primary" href="#kontakt">Beratung vereinbaren</a>
+              <a class="btn" href="#neubau">Schlüsselfertig bauen</a>
+            </div>
+
+            <div class="mini">
+              <span class="badge">KfW-Experte</span>
+              <span>Für Ihr Zuhause · <b>Mo–Fr 8:00–18:00</b></span>
+            </div>
+          </div>
+
+          <div class="statCard" aria-label="Leistungen Überblick">
+            <div class="statTop">
+              <div>
+                <div class="badge">Ihr Partner für</div>
+                <h2 style="margin:10px 0 0; font-size:22px;">Sanierung · Neubau · Vermarktung</h2>
+                <p style="margin:8px 0 0; color:var(--muted);">
+                  Klimafreundlich, förderoptimiert und aus einer Hand – für niedrige Energiekosten und nachhaltige Wertsteigerung.
+                </p>
+              </div>
+            </div>
+
+            <div class="cards3">
+              <div class="pill">
+                <h3>Sanierung</h3>
+                <p>Ganzheitliche Konzepte Richtung KfW-Effizienzhaus – strategisch geplant.</p>
+              </div>
+              <div class="pill">
+                <h3>Neubau</h3>
+                <p>Schlüsselfertig bauen – individuell geplant und sauber koordiniert.</p>
+              </div>
+              <div class="pill">
+                <h3>Vermarktung</h3>
+                <p>Wert &amp; Präsentation im Blick – damit sich Investitionen rechnen.</p>
+              </div>
+            </div>
+
+            <a class="btn primary" href="#kontakt" style="margin-top:6px;">Maximale KfW-Förderung sichern</a>
+            <div class="hint">Hinweis: Förderdetails hängen vom Objekt und Programmstand ab.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SANIERUNGSKONZEPTE -->
+    <section id="sanierung">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>KfW-Sanierungskonzepte</h2>
+            <p>Der strategische Weg zur energetischen Modernisierung mit maximaler Förderung.</p>
+          </div>
+          <a class="btn" href="#kontakt">Kostenlose Erstberatung</a>
+        </div>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Was ist ein Sanierungskonzept?</h3>
+            <p>
+              Ein Sanierungskonzept ist ein maßgeschneiderter Plan, der ein bestehendes Gebäude systematisch und wirtschaftlich
+              zur Energieeffizienz führt.
+            </p>
+            <p style="margin-top:10px; color:var(--muted); font-weight:700;">
+              Zentrale Frage: Wie wird aus einem Altbau ein KfW-Effizienzhaus?
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Ganzheitlicher Ansatz</h3>
+            <ul class="list">
+              <li>Gebäudehülle (Dämmung)</li>
+              <li>Heizungs- und Anlagentechnik</li>
+              <li>Fenster &amp; Außentüren</li>
+              <li>Lüftungsanlage mit Wärmerückgewinnung</li>
+              <li>Photovoltaik &amp; Stromnutzung</li>
+              <li>Bilanzierung / Primärenergiebedarf</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="secHead" style="margin-top:20px;">
+          <div>
+            <h2>Ihre Vorteile</h2>
+            <p>Sechs Punkte, die Ihr Sanierungsprojekt planbar, effizient und wirtschaftlich machen.</p>
+          </div>
+        </div>
+
+        <div class="benefits">
+          <div class="benefit">
+            <div class="num">01</div>
+            <h4>Gezielte Planung</h4>
+            <p>Klare Strategie statt Einzelmaßnahmen – sinnvoll abgestimmt auf Ihr Ziel (z. B. KfW-40-EE, niedrige Energiekosten, Wohnkomfort).</p>
+          </div>
+          <div class="benefit">
+            <div class="num">02</div>
+            <h4>Maximale Förderung</h4>
+            <p>Optimale Ausschöpfung von KfW-/BAFA- und regionalen Programmen – inklusive Antragsbegleitung.</p>
+          </div>
+          <div class="benefit">
+            <div class="num">03</div>
+            <h4>Langfristige Einsparung</h4>
+            <p>Nachhaltig sinkende Energiekosten durch optimierte Gebäudeeffizienz.</p>
+          </div>
+          <div class="benefit">
+            <div class="num">04</div>
+            <h4>Wertsteigerung</h4>
+            <p>Energetische Modernisierung steigert den Immobilienwert und verbessert die Vermarktbarkeit.</p>
+          </div>
+          <div class="benefit">
+            <div class="num">05</div>
+            <h4>Klimaschutz</h4>
+            <p>CO₂-Reduktion durch moderne Technik – mehr Zukunftssicherheit für Ihr Objekt.</p>
+          </div>
+          <div class="benefit">
+            <div class="num">06</div>
+            <h4>Investitionssicherheit</h4>
+            <p>Fundierte Entscheidungsgrundlage durch Planung und Wirtschaftlichkeitsbetrachtung.</p>
+          </div>
+        </div>
+
+        <div class="secHead" style="margin-top:20px;">
+          <div>
+            <h2>Was gehört dazu?</h2>
+            <p>Fünf Phasen – von der Analyse bis zur Förderstrategie.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="card"><h3>01 · Gebäudeanalyse</h3><p>Bewertung von Hülle/Technik, energetischem Ist-Zustand (z. B. Thermografie, Luftdichtheit).</p></div>
+          <div class="card"><h3>02 · Kosten-Nutzen-Analyse</h3><p>Maßnahmen wirtschaftlich bewerten, Prioritäten setzen.</p></div>
+          <div class="card"><h3>03 · Maximale Ausschöpfung</h3><p>Förderprogramme/Anforderungen prüfen und kombinieren.</p></div>
+          <div class="card"><h3>04 · Planung</h3><p>Gewerkekoordination, Zeitplan, Qualitätsstandards definieren.</p></div>
+          <div class="card"><h3>05 · Strategische Reihenfolge</h3><p>Schritte so ordnen, dass Technik, Hülle und Förderung zusammenpassen.</p></div>
+          <div class="card"><h3>Ihr nächster Schritt</h3><p>Kurzer Check + Beratung – danach wissen Sie genau, was sinnvoll ist.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EINZELMASSNAHMEN -->
+    <section id="einzelmassnahmen">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>KfW-Einzelmaßnahmen</h2>
+            <p>Professionelle Einzelmaßnahmen – von Wärmeschutz bis Heiztechnik.</p>
+          </div>
+          <a class="btn" href="#kontakt">Maßnahme anfragen</a>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <h3>Wärmeschutzmaßnahmen</h3>
+            <p>Dämmung, Gebäudehülle, Luftdichtheit – für weniger Wärmeverlust.</p>
+          </div>
+          <div class="card">
+            <h3>Heizung</h3>
+            <p>Moderne Systeme und sinnvolle Dimensionierung – effizient &amp; förderfähig.</p>
+          </div>
+          <div class="card">
+            <h3>Erneuerbare Energien</h3>
+            <p>PV &amp; erneuerbare Wärme – für bessere Bilanz und Zukunftssicherheit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEUBAU -->
+    <section id="neubau">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>Schlüsselfertig bauen</h2>
+            <p>Vielfältige Baukonzepte – individuell geplant und umgesetzt.</p>
+          </div>
+          <a class="btn" href="#kontakt">Projekt besprechen</a>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <h3>Einfamilienhaus</h3>
+            <p>Familienfreundlich, durchdacht, wertstabil – passend zu Ihrem Alltag.</p>
+          </div>
+          <div class="card">
+            <h3>Mehrfamilienhaus</h3>
+            <p>Für Kapitalanlage oder Mehrgenerationen – planbar &amp; effizient.</p>
+          </div>
+          <div class="card">
+            <h3>Bungalow</h3>
+            <p>Barrierearm, komfortabel, zeitlos – Wohnen auf einer Ebene.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERMARKTUNG -->
+    <section id="vermarktung">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>Immobilienvermarktung</h2>
+            <p>Damit sich Ihre Investition auch am Markt auszahlt – mit klarer Positionierung und sauberer Präsentation.</p>
+          </div>
+          <a class="btn" href="#kontakt">Vermarktung anfragen</a>
+        </div>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Wert &amp; Zielgruppe im Fokus</h3>
+            <p>Wir denken Sanierung/Neubau immer auch mit Blick auf Wertentwicklung und Käufer-/Mieteransprache.</p>
+          </div>
+          <div class="card">
+            <h3>Ein Ansprechpartner</h3>
+            <p>Von Planung bis Umsetzung – kurze Wege, klare Zuständigkeiten, weniger Reibung.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KUNDENSTIMMEN -->
+    <section id="kunden">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>Das sagen unsere Kunden</h2>
+            <p>Ein Auszug aus typischem Feedback – von Beratung bis Übergabe.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="quote">
+            <div class="stars">★★★★★</div>
+            <div>„Von der ersten Beratung bis zur Schlüsselübergabe – absolut professionell und in außergewöhnlicher Qualität realisiert.“</div>
+            <div class="who"><span><b>Familie Müller</b></span><span>Bauherren</span></div>
+          </div>
+          <div class="quote">
+            <div class="stars">★★★★★</div>
+            <div>„Moderne Architektur trifft auf nachhaltige Bauweise – genau das, was wir uns vorgestellt hatten.“</div>
+            <div class="who"><span><b>Thomas Weber</b></span><span>Geschäftsführer</span></div>
+          </div>
+          <div class="quote">
+            <div class="stars">★★★★☆</div>
+            <div>„Denkmalgeschützter Altbau: moderne Technik perfekt integriert – starke Leistung.“</div>
+            <div class="who"><span><b>Sarah Schmidt</b></span><span>Eigentümerin</span></div>
+          </div>
+          <div class="quote">
+            <div class="stars">★★★★★</div>
+            <div>„Wirtschaftlichkeit &amp; Qualität – beides perfekt umgesetzt. Planung durchdacht, Bauzeit eingehalten.“</div>
+            <div class="who"><span><b>Michael Klein</b></span><span>Investor</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>Häufig gestellte Fragen</h2>
+            <p>Antworten zu Sanierung, Neubau, Förderungen und Maßnahmen.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <details>
+            <summary>Was bedeutet KfW 55, KfW 40 und KfW 40 EE?</summary>
+            <p>KfW 55/40/40 EE sind Effizienzstandards: 55 % bzw. 40 % des Energiebedarfs eines Referenzgebäudes. „40 EE“ steht zusätzlich für erneuerbare Energien.</p>
+          </details>
+          <details>
+            <summary>Welche Fördermittel kann ich bei energetischer Sanierung beantragen?</summary>
+            <p>Je nach Maßnahme sind KfW-Kredite/Zuschüsse sowie BAFA-Zuschüsse (z. B. Heizung, erneuerbare Energien) möglich – ergänzt durch regionale Programme.</p>
+          </details>
+          <details>
+            <summary>Wie beantrage ich KfW-Förderungen richtig?</summary>
+            <p>Wichtig: Antrag vor Maßnahmenbeginn stellen. Üblich sind Hausbank-Prozess und/oder Einbindung eines Energieberaters zur Planung/Dokumentation.</p>
+          </details>
+          <details>
+            <summary>Welche Dämmmaßnahmen sind förderfähig?</summary>
+            <p>Typisch: Dämmung Außenwand, Dach, Kellerdecke, Boden, Fenster/Türen, Luftdichtheit – immer nach Programm-Vorgaben.</p>
+          </details>
+          <details>
+            <summary>Welche Heizungsanlagen werden gefördert?</summary>
+            <p>Förderfähig sind v. a. effiziente Systeme wie Wärmepumpen, Biomasse, Brennstoffzellen und hybride Lösungen – abhängig vom Programmstand.</p>
+          </details>
+          <details>
+            <summary>Noch Fragen?</summary>
+            <p>Schreib uns kurz – wir melden uns schnell zurück.</p>
+          </details>
+        </div>
+
+        <div style="margin-top:16px;">
+          <a class="btn primary" href="#kontakt">Kontakt aufnehmen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt">
+      <div class="wrap">
+        <div class="secHead">
+          <div>
+            <h2>Kontakt</h2>
+            <p>Unverbindlich anfragen – wir beraten gerne persönlich.</p>
+          </div>
+        </div>
+
+        <div class="contactGrid">
+          <div class="contactCard">
+            <h3>Kontaktinformationen</h3>
+            <p class="small">Erreichen Sie uns über verschiedene Kanäle.</p>
+
+            <div class="grid2" style="margin-top:12px;">
+              <div class="card">
+                <h3>Telefon</h3>
+                <p><a href="tel:+4944478559816">+49 444 78559816</a></p>
+              </div>
+              <div class="card">
+                <h3>E-Mail</h3>
+                <p><a href="mailto:info@baukonzepte360.de">info@baukonzepte360.de</a></p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:12px;">
+              <h3>Adresse</h3>
+              <p>Hansestraße 1, 49685 Emstek</p>
+              <p class="small">Öffnungszeiten: Mo–Fr 8:00–18:00 Uhr</p>
+            </div>
+
+            <div class="heroCtas" style="margin-top:12px;">
+              <a class="btn primary" href="tel:+4944478559816">Direkt anrufen</a>
+              <a class="btn" href="mailto:info@baukonzepte360.de?subject=Anfrage%20Baukonzept360">E-Mail schreiben</a>
+            </div>
+          </div>
+
+          <div class="contactCard">
+            <h3>Nachricht senden</h3>
+
+            <!-- GitHub Pages hat kein Backend.
+                 Option A: Mailto (einfach)
+                 Option B: Formspree/Formspark (professionell)
+            -->
+            <form id="contactForm">
+              <div class="row2">
+                <div>
+                  <label for="name">Name *</label>
+                  <input id="name" name="name" required />
+                </div>
+                <div>
+                  <label for="email">E-Mail *</label>
+                  <input id="email" name="email" type="email" required />
+                </div>
+              </div>
+
+              <label for="phone">Telefon</label>
+              <input id="phone" name="phone" />
+
+              <label for="message">Nachricht *</label>
+              <textarea id="message" name="message" required></textarea>
+
+              <div class="check">
+                <input id="privacy" type="checkbox" required />
+                <label for="privacy" style="margin:0; font-weight:600;">
+                  Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu. *
+                </label>
+              </div>
+
+              <button class="btn primary" type="submit" style="margin-top:12px;">Nachricht senden</button>
+              <p class="small" style="margin-top:10px;">
+                Hinweis: Diese Demo sendet per E-Mail (ohne Server). Für echtes Formular sag mir kurz Bescheid, dann richte ich Formspree sauber ein.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footGrid">
+        <div>
+          <img class="logo" src="https://baukonzepte360.de/logo-white.svg" alt="Baukonzept360 Logo" style="height:26px" />
+          <p style="margin:10px 0 0;">
+            Ihr zuverlässiger Partner für Immobilienprojekte und Bauvorhaben seit über 25 Jahren. Qualität und Innovation aus Tradition.
+          </p>
+        </div>
+
+        <div class="footLinks">
+          <b style="color:var(--text);">Schnellzugriff</b>
+          <a href="#top">Startseite</a>
+          <a href="#einzelmassnahmen">Einzelmaßnahmen</a>
+          <a href="#sanierung">KfW-40 / Sanierung</a>
+          <a href="#neubau">Neubau</a>
+          <a href="#vermarktung">Vermarktung</a>
+          <a href="#faq">FAQ</a>
+        </div>
+
+        <div class="footLinks">
+          <b style="color:var(--text);">Kontakt</b>
+          <a href="https://maps.google.com/?q=Hansestra%C3%9Fe%201%2C%2049685%20Emstek" target="_blank" rel="noreferrer">Hansestraße 1, 49685 Emstek</a>
+          <a href="tel:+4944478559816">+49 444 78559816</a>
+          <a href="mailto:info@baukonzepte360.de">info@baukonzepte360.de</a>
+        </div>
+      </div>
+
+      <div class="copy">
+        <div>© 2025 Derksen &amp; Ellias Immobilien GmbH. Alle Rechte vorbehalten.</div>
+        <div class="legal">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <a href="/barrierefreiheit">Barrierefreiheit</a>
+          <a href="/agb">AGB</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const nav = document.getElementById('topNav');
+    const btn = document.getElementById('menuBtn');
+    btn?.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Simple mailto-form submit (GitHub Pages ohne Backend)
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const subject = encodeURIComponent('Anfrage Baukonzept360');
+      const body = encodeURIComponent(
+        `Name: ${name}\nE-Mail: ${email}\nTelefon: ${phone}\n\nNachricht:\n${message}`
+      );
+
+      window.location.href = `mailto:info@baukonzepte360.de?subject=${subject}&body=${body}`;
+    });
+  </script>
 </body>
 </html>
