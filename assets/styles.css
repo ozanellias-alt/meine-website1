@@ -1,6 +1,6 @@
 :root{
-  --brand: #0ea5e9;     /* HIER deine Baukonzept Hauptfarbe */
-  --brand2:#14b8a6;     /* HIER deine zweite Farbe */
+  --brand2 #155dfc; /* HIER deine Baukonzept Hauptfarbe */
+  --brand2:#54a2ff;    /* HIER deine zweite Farbe */
   --ink:   #0f172a;
   --muted: #475569;
   --bg:    #f8fafc;     /* heller Hintergrund */
